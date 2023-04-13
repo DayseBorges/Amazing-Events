@@ -1,37 +1,37 @@
 .title {
-    font-size: 1rem;
-    font-family: 'Quicksand', sans-serif;
-    text-align: center;
-    margin-top: 3vw;
-    color: #1282A2;
+  font-size: 1rem;
+  font-family: "Quicksand", sans-serif;
+  text-align: center;
+  margin-top: 3vw;
+  color: #1282a2;
 }
 
 .form-group {
-    min-width: 40vw;
-    margin-top: 2vw;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
+  min-width: 40vw;
+  margin-top: 2vw;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
 }
 
 .container-form {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .button {
-    color: white;
-    background-color: #1282A2;
-    border-radius: 5px;
-    font-family: 'Quicksand', sans-serif;
-    border: solid 1px #1282A2;
-    width: 5vw;
-    margin-top: 2vw;
-    transition: 0.5s;
+  color: white;
+  background-color: #1282a2;
+  border-radius: 5px;
+  font-family: "Quicksand", sans-serif;
+  border: solid 1px #1282a2;
+  min-width: 5vw;
+  margin-top: 2vw;
+  transition: 0.5s;
 }
 
 .button:hover {
-   /* transform: scale(1.05);
+  /* transform: scale(1.05);
    transition: 0.5s; */
-   background-color: #064a5c;
-   border: solid 1px #1282A2;
+  background-color: #064a5c;
+  border: solid 1px #1282a2;
 }

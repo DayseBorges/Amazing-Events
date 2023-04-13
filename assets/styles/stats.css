@@ -1,24 +1,24 @@
 .title {
-    font-size: 1rem;
-    font-family: 'Quicksand', sans-serif;
-    text-align: center;
-    margin-top: 3vw;
-    color: #1282A2;
+  font-size: 1rem;
+  font-family: "Quicksand", sans-serif;
+  text-align: center;
+  margin-top: 3vw;
+  color: #1282a2;
 }
 
 .container-table {
-    margin-left: 5vw;
-    margin-top: 2vw;
-    width: 90vw;
-    background-color: rgb(245, 255, 255);
+  margin-left: 5vw;
+  margin-top: 2vw;
+  width: 90vw;
+  background-color: rgb(245, 255, 255);
 }
 
 .estadisticas {
-    background-color: #1282A2;
-    color: white;
-    width: 500vw;
+  background-color: #929292;
+  color: white;
+  width: 500vw;
 }
 
-.estadisticas th{
-    width: 1vw;
+.estadisticas th {
+  width: 1vw;
 }
