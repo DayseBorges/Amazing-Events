@@ -59,3 +59,14 @@
   transition: ease-in-out 0.4s;
   transform: scale(1.1);
 }
+
+.filters {
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1230px) {
+  .search_bar {
+    height: 10vw;
+    width: 120vw;
+  }
+}
