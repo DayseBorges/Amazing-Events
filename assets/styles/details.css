@@ -1,0 +1,32 @@
+.card {
+    max-width: 780px;
+}
+
+.container-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vw;
+}
+
+.card-img {
+    margin-top: 1vw;
+    margin-left: 1vw;
+    min-width: 20vw;
+    min-height: 15vw;
+}
+
+.card-body {
+    margin-top: 1vw;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.card-body h5 {
+    color: #1282A2;
+    font-weight: 800;
+}
+
+.card-body p {
+    font-weight: 700;
+}
+
