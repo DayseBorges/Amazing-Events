@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap");
+
+* {
+  font-family: "Quicksand", sans-serif;
+}
+.header {
+  background-color: #1282a2;
+}
+.navbar-brand > img {
+  max-width: 200px;
+  max-height: 200px;
+}
+.card > img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+.footer {
+  background-color: #1282a2;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.footer > h4 {
+  text-align: center;
+  font-size: 2rem;
+}
+.footer_links_container {
+  max-width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.footer_link {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+}
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.626);
+
+  transition: ease-in-out 0.4s;
+  transform: scale(1.1);
+}
