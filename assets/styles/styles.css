@@ -17,6 +17,9 @@
 .cards_container {
   justify-content: center;
 }
+.card {
+  width: 18rem;
+}
 .card > img {
   height: 200px;
   width: 100%;
@@ -26,7 +29,7 @@
 .container-relative {
   position: relative;
 }
-.container-relative p{
+.container-relative p {
   margin-bottom: 40px;
 }
 .btn-bottom {
