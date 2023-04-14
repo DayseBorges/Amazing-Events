@@ -18,10 +18,48 @@ const imprimirData = (data) => {
     }
 };
 
+const categoryContainer = document.getElementById('filters');
+const categorias = (data) => {
+    const categoriasUnicas = {};
+    for (let event of data.events) {
+        const categoria = event.category;
+
+        if (!categoriasUnicas[categoria]) {
+            const checkbox = document.createElement("div");
+            checkbox.className = "form-check";
+            checkbox.classList.add("m-2");
+            checkbox.innerHTML += `
+            <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="${event.category}"
+                  id="check1"
+                />
+                <label class="form-check-label" for="check1"> ${event.category} </label>
+            `
+            categoryContainer.appendChild(checkbox)
+            categoriasUnicas[categoria] = true; 
+        }
+    }
+}
+
+const inputCategory = categoryContainer.childNodes.querySelectorAll("input");
+
+console.log(inputCategory);
+
+
+inputCategory.forEach(()=> {
+
+})
+
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();
     })
         .then( data => {
             imprimirData(data);
+            categorias(data);
         });
+
+
+        
