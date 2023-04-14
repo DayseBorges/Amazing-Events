@@ -43,14 +43,24 @@ const categorias = (data) => {
     }
 }
 
-const inputCategory = categoryContainer.childNodes.querySelectorAll("input");
+    
+const getCategorys = () => {
+    const inputs = document.querySelectorAll("input[type=checkbox]")
+    return inputs;
+}
 
-console.log(inputCategory);
+const listenerEvent = () => {
+    let inputs = getCategorys();
+    inputs.forEach(input => {
+        input.addEventListener("change", () => {
+            input.checked ?
+                console.log("ok") :
+                console.log("no")
+            
+        })
+    });
+}
 
-
-inputCategory.forEach(()=> {
-
-})
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
@@ -59,6 +69,8 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         .then( data => {
             imprimirData(data);
             categorias(data);
+            getCategorys();
+            listenerEvent()
         });
 
 
