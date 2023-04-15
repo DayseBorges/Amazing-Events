@@ -1,6 +1,31 @@
 const cardsContainer = document.getElementById('cards_container');
-const imprimirData = (data) => {
-    for ( let event of data.events ){
+
+let filtros = []
+let dataGlobal = {}
+
+const clearCardsContainerHTML = () => {
+    cardsContainer.innerHTML = "";
+}
+
+const imprimirData = (filtros) => {
+    clearCardsContainerHTML();
+    let dataFiltered = []
+
+    if( filtros.length   > 0 ){
+        for (let filtro of filtros) {
+            for ( let event of dataGlobal.events ){
+                if ( event.category.toLowerCase() == filtro.toLowerCase()){
+                    dataFiltered.push(event)
+                }
+            }
+        }
+    } else {
+        
+        dataFiltered = dataGlobal.events;
+    }
+    
+    console.log(dataFiltered)
+    for ( let event of dataFiltered ){
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
         cardDiv.classList.add("m-3");
@@ -21,9 +46,10 @@ const imprimirData = (data) => {
 const categoryContainer = document.getElementById('filters');
 const categorias = (data) => {
     const categoriasUnicas = {};
+    let idCounter = 0;
     for (let event of data.events) {
         const categoria = event.category;
-
+        idCounter++
         if (!categoriasUnicas[categoria]) {
             const checkbox = document.createElement("div");
             checkbox.className = "form-check";
@@ -33,45 +59,55 @@ const categorias = (data) => {
                   class="form-check-input"
                   type="checkbox"
                   value="${event.category}"
-                  id="check1"
+                  id="check${idCounter}"
                 />
-                <label class="form-check-label" for="check1"> ${event.category} </label>
+                <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>
             `
             categoryContainer.appendChild(checkbox)
             categoriasUnicas[categoria] = true; 
         }
     }
 }
-
-    
 const getCategorys = () => {
     const inputs = document.querySelectorAll("input[type=checkbox]")
     return inputs;
 }
 
-const listenerEvent = () => {
-    let inputs = getCategorys();
-    inputs.forEach(input => {
-        input.addEventListener("change", () => {
-            input.checked ?
-                console.log("ok") :
-                console.log("no")
-            
-        })
-    });
-}
+const addEventsListeners = () => {
+    const inputs = getCategorys();
+    
+    for (let input of inputs ){
+        input.addEventListener('change', () => {
+            if( input.checked ){
+                filtros.push( input.defaultValue )
+                imprimirData(filtros)
+            } else {
+                filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
+                imprimirData(filtros)
 
+
+            }
+        })
+    }
+}
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();
     })
         .then( data => {
-            imprimirData(data);
-            categorias(data);
+             
+            dataGlobal = data; 
+            imprimirData([]);
+            categorias(dataGlobal);
             getCategorys();
-            listenerEvent()
-        });
+            addEventsListeners()
+        }).catch( err => console.log(err));
 
 
-        
+
+
+
+
+
+
