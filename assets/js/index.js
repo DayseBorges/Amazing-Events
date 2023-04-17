@@ -35,17 +35,17 @@ const imprimirData = (filtros) => {
                 </p>
                 <a href="../pages/details.html?id=${event._id}" class="btn btn-primary btn-bottom">Ver Más</a>
             </div>
-        `
-        cardsContainer.appendChild(cardDiv)
-    }
+        `;
+    cardsContainer.appendChild(cardDiv);
+  }
 };
+
 const categoryContainer = document.getElementById('filters');
 const categorias = (data) => {
     const categoriasUnicas = {};
-    let idCounter = 0;
     for (let event of data.events) {
         const categoria = event.category;
-        idCounter++
+
         if (!categoriasUnicas[categoria]) {
             const checkbox = document.createElement("div");
             checkbox.className = "form-check";
@@ -57,49 +57,44 @@ const categorias = (data) => {
                   value="${event.category}"
                   id="check${idCounter}"
                 />
-                <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>
+                <label class="form-check-label" for="check1"> ${event.category} </label>
             `
             categoryContainer.appendChild(checkbox)
             categoriasUnicas[categoria] = true; 
         }
     }
 }
+
+    
 const getCategorys = () => {
-    const inputs = document.querySelectorAll("input[type=checkbox]")
-    return inputs;
+  const inputs = document.querySelectorAll("input[type=checkbox]");
+  return inputs;
+};
+
+
+const listenerEvent = () => {
+    let inputs = getCategorys();
+    inputs.forEach(input => {
+        input.addEventListener("change", () => {
+            input.checked ?
+                console.log("ok") :
+                console.log("no")
+            
+        })
+    });
 }
 
-const addEventsListeners = () => {
-    const inputs = getCategorys();
-    for (let input of inputs ){
-        input.addEventListener('change', () => {
-            if( input.checked ){
-                filtros.push( input.defaultValue )
-                imprimirData(filtros)
-            } else {
-                filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
-                imprimirData(filtros)
-            }
-        })
-    }
-}
+
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();
     })
         .then( data => {
-             
-            dataGlobal = data; 
-            imprimirData([]);
-            categorias(dataGlobal);
+            imprimirData(data);
+            categorias(data);
             getCategorys();
-            addEventsListeners()
-        }).catch( err => console.log(err));
+            listenerEvent()
+        });
 
 
-
-
-
-
-
-
+        
