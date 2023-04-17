@@ -115,7 +115,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         return resp.json();
     })
         .then( data => {
-            imprimirData(data);
+            imprimirData([]);
             categorias(data);
             getCategorys();
             addEventsListeners()
