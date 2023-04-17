@@ -1,6 +1,8 @@
 const cardsContainer = document.getElementById('cards_container');
 let filtros = []
 let dataGlobal = {}
+let filtrosSearch = "";
+
 const clearCardsContainerHTML = () => {
     cardsContainer.innerHTML = "";
 }
@@ -14,40 +16,60 @@ const filtrarEventos = (fecha, fechaEvento) => {
 const imprimirData = (filtros) => {
     clearCardsContainerHTML();
     let dataFiltered = []
-    if (filtros.length > 0) {
+    // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
+
+    // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
+   
+    if(filtros.length > 0 &&  filtrosSearch.length > 0) {
         for (let filtro of filtros) {
-            for (let event of dataGlobal.events) {
-                if (event.category.toLowerCase() == filtro.toLowerCase()
-                    && filtrarEventos(dataGlobal.currentDate, event.date)
-                ) {
-                    dataFiltered.push(event)
+            for ( let event of dataGlobal.events ){
+                if ((event.category.toLowerCase() == filtro.toLowerCase())  && event.date > dataGlobal.currentDate) {
+                    if(event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
+                        dataFiltered.push(event)
+                    }
                 }
             }
         }
+    }
+     // Este if solo funciona si no hay checkboxes marcados y solo hay algo en el search bar
+    else if( filtros.length === 0 && filtrosSearch.length > 0){
+        for ( let event of dataGlobal.events ){
+            if ((event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)) && event.date > dataGlobal.currentDate){
+                dataFiltered.push(event)
+            }
+        }
+    }
+    // Este if solo funciona si hay checkboxes marcados y no hay nada en el search bar
+    else if( filtros.length  > 0 && filtrosSearch.length === 0){
+        for (let filtro of filtros) {
+            for ( let event of dataGlobal.events ){
+                if (((event.category.toLowerCase() == filtro.toLowerCase()) || (event.category.toLowerCase() == filtrosSearch.toLowerCase()) && event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())) && event.date > dataGlobal.currentDate) {
+                    dataFiltered.push(event)
+                }
+            }
+        } 
     } else {
         dataFiltered = dataGlobal.events.filter(event => event.date > dataGlobal.currentDate)
     }
-    if (dataFiltered.length > 0) {
-        for (let event of dataFiltered) {
-            const cardDiv = document.createElement("div");
-            cardDiv.className = "card";
-            cardDiv.classList.add("m-3");
-            cardDiv.innerHTML = `
-                <img src="${event.image}" class="card-img-top" alt="..." />
-                <div class="card-body container-relative">
-                    <h5 class="card-title">${event.name}</h5>
-                    <p class="card-text">
-                        ${event.description}
-                        <br>
-                        <br>
-                        <span>${event.date}</span>
-                        <br>
-                    </p>
-                    <a href="../pages/details.html?id=${event._id}" class="btn btn-primary btn-bottom">Ver Más</a>
-                </div>
-            `
-            cardsContainer.appendChild(cardDiv);
-        }
+    
+    if(dataFiltered.length > 0){
+    for ( let event of dataFiltered ){
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "card";  
+        cardDiv.classList.add("m-3");
+        cardDiv.innerHTML = `
+            <img src="${event.image}" class="card-img-top" alt="..." />
+            <div class="card-body container-relative">
+                <h5 class="card-title">${event.name}</h5>
+                <p class="card-text">
+                    ${event.description}
+                </p>
+                <a href="../pages/details.html?id=${event._id}" class="btn btn-primary btn-bottom">Ver Más</a>
+            </div>
+        `
+        cardsContainer.appendChild(cardDiv)
+
+    }
     } else {
         let errorMessage = document.createElement('h2')
         errorMessage.classList.add('text-center')
@@ -97,6 +119,21 @@ const addEventsListeners = () => {
         })
     }
 }
+
+const inputSearch = document.querySelector(".form-control");
+inputSearch.addEventListener("change", () => {
+    const eventsFiltrados = inputSearch.value;
+    filtrosSearch = eventsFiltrados;
+    
+    imprimirData(filtros)
+})
+
+const buttonSearch = document.querySelector(".btn");
+buttonSearch.addEventListener("click", (event) => {
+    event.preventDefault();
+    
+})
+
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();

@@ -1,5 +1,4 @@
 const cardsContainer = document.getElementById('cards_container');
-
 let filtros = []
 let dataGlobal = {}
 let filtrosSearch = "";
@@ -7,19 +6,22 @@ let filtrosSearch = "";
 const clearCardsContainerHTML = () => {
     cardsContainer.innerHTML = "";
 }
-
+const filtrarEventos = (fecha, fechaEvento) => {
+    let fechaApi = new Date(fecha);
+    let fechaEventoDate = new Date(fechaEvento)
+    return fechaApi > fechaEventoDate;
+}
 const imprimirData = (filtros) => {
     clearCardsContainerHTML();
-    let dataFiltered = [];
-
-    // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
+    let dataFiltered = []
+   
 
     // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
    
     if(filtros.length > 0 &&  filtrosSearch.length > 0) {
         for (let filtro of filtros) {
             for ( let event of dataGlobal.events ){
-                if ((event.category.toLowerCase() == filtro.toLowerCase())) {
+                if (event.category.toLowerCase() == filtro.toLowerCase()  ) {
                     if(event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
                         dataFiltered.push(event)
                     }
@@ -47,16 +49,12 @@ const imprimirData = (filtros) => {
     } else {
         dataFiltered = dataGlobal.events;
     }
-
+    
     if(dataFiltered.length > 0){
     for ( let event of dataFiltered ){
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
         cardDiv.classList.add("m-3");
-        cardDiv.setAttribute('id', `card-${event._id}`);
-        cardDiv.addEventListener('click', () => {
-            window.location.href = `../pages/details.html?id=${event._id}`;
-        });
         cardDiv.innerHTML = `
             <img src="${event.image}" class="card-img-top" alt="..." />
             <div class="card-body container-relative">
@@ -77,7 +75,6 @@ const imprimirData = (filtros) => {
         cardsContainer.appendChild(errorMessage);
     }
 };
-
 const categoryContainer = document.getElementById('filters');
 const categorias = (data) => {
     const categoriasUnicas = {};
@@ -96,29 +93,25 @@ const categorias = (data) => {
                   value="${event.category}"
                   id="check${idCounter}"
                 />
-                <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>
-            `
+                <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>`
             categoryContainer.appendChild(checkbox)
             categoriasUnicas[categoria] = true;
         }
     }
 }
-
 const getCategorys = () => {
     const inputs = document.querySelectorAll("input[type=checkbox]")
     return inputs;
 }
-
 const addEventsListeners = () => {
     const inputs = getCategorys();
-    
-    for (let input of inputs ){
+    for (let input of inputs) {
         input.addEventListener('change', () => {
-            if( input.checked ){
-                filtros.push( input.defaultValue )
+            if (input.checked) {
+                filtros.push(input.defaultValue)
                 imprimirData(filtros)
             } else {
-                filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
+                filtros = filtros.filter(filtro => filtro !== input.defaultValue)
                 imprimirData(filtros)
             }
         })
@@ -138,16 +131,14 @@ buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
 })
 
-
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();
     })
-        .then( data => {
-             
-            dataGlobal = data; 
-            imprimirData([]);
-            categorias(dataGlobal);
-            getCategorys();
-            addEventsListeners()
-        }).catch( err => console.log(err));
+    .then(data => {
+        dataGlobal = data;
+        imprimirData([]);
+        categorias(dataGlobal);
+        getCategorys();
+        addEventsListeners()
+    }).catch(err => console.log(err));
