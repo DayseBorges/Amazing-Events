@@ -33,6 +33,9 @@ main {
   object-fit: cover;
   margin-top: 10px;
 }
+.container-main {
+  min-height: 31.45vw;
+}
 .container-relative {
   position: relative;
 }
@@ -44,6 +47,9 @@ main {
   bottom: 0px;
   margin-bottom: 15px;
 }
+.footer_container {
+  position: relative;
+}
 .footer {
   background-color: #1282a2;
   height: 150px;
@@ -51,9 +57,9 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
   width: 100%;
+  box-sizing: border-box;
 }
 .footer > h4 {
   text-align: center;
