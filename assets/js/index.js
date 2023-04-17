@@ -48,7 +48,7 @@ const imprimirData = (filtros) => {
         dataFiltered = dataGlobal.events;
     }
 
-    
+    if(dataFiltered.length > 0){
     for ( let event of dataFiltered ){
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
@@ -65,6 +65,12 @@ const imprimirData = (filtros) => {
         `
         cardsContainer.appendChild(cardDiv)
 
+    }
+    } else {
+        let errorMessage = document.createElement('h2')
+        errorMessage.classList.add('text-center')
+        errorMessage.textContent = "No se encontraron elementos que coincidan con tu busqueda."
+        cardsContainer.appendChild(errorMessage);
     }
 };
 
