@@ -136,7 +136,6 @@ inputSearch.addEventListener("change", () => {
 const buttonSearch = document.querySelector(".btn");
 buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
-    
 })
 
 
