@@ -14,15 +14,36 @@ const imprimirData = (filtros) => {
 
     // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
 
-    if( filtros.length   > 0 ){
+    // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
+   
+    if(filtros.length > 0 &&  filtrosSearch.length > 0) {
         for (let filtro of filtros) {
             for ( let event of dataGlobal.events ){
-
+                if ((event.category.toLowerCase() == filtro.toLowerCase())) {
+                    if(event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
+                        dataFiltered.push(event)
+                    }
+                }
+            }
+        }
+    }
+     // Este if solo funciona si no hay checkboxes marcados y solo hay algo en el search bar
+    else if( filtros.length === 0 && filtrosSearch.length > 0){
+        for ( let event of dataGlobal.events ){
+            if (event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
+                dataFiltered.push(event)
+            }
+        }
+    }
+    // Este if solo funciona si hay checkboxes marcados y no hay nada en el search bar
+    else if( filtros.length  > 0 && filtrosSearch.length === 0){
+        for (let filtro of filtros) {
+            for ( let event of dataGlobal.events ){
                 if ((event.category.toLowerCase() == filtro.toLowerCase()) || (event.category.toLowerCase() == filtrosSearch.toLowerCase()) && event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())) {
                     dataFiltered.push(event)
                 }
             }
-        }
+        } 
     } else {
         dataFiltered = dataGlobal.events;
     }
@@ -97,9 +118,9 @@ const addEventsListeners = () => {
 const inputSearch = document.querySelector(".form-control");
 inputSearch.addEventListener("change", () => {
     const eventsFiltrados = inputSearch.value;
-    console.log(filtros);
     filtrosSearch = eventsFiltrados;
-    console.log(filtrosSearch);
+    
+    imprimirData(filtros)
 })
 
 const buttonSearch = document.querySelector(".btn");
@@ -120,13 +141,4 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             categorias(dataGlobal);
             getCategorys();
             addEventsListeners()
-
         }).catch( err => console.log(err));
-
-
-
-
-
-
-
-
