@@ -119,7 +119,6 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             categorias(data);
             getCategorys();
             addEventsListeners()
-            
         }).catch( err => console.log(err));
 
 
