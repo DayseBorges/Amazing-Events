@@ -7,23 +7,45 @@ let filtrosSearch = "";
 const clearCardsContainerHTML = () => {
     cardsContainer.innerHTML = "";
 }
+
 const imprimirData = (filtros) => {
     clearCardsContainerHTML();
     let dataFiltered = []
 
     // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
 
-    if( filtros.length   > 0 ){
+    // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
+   
+    if(filtros.length > 0 &&  filtrosSearch.length > 0) {
         for (let filtro of filtros) {
             for ( let event of dataGlobal.events ){
-
+                if ((event.category.toLowerCase() == filtro.toLowerCase())) {
+                    if(event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
+                        dataFiltered.push(event)
+                    }
+                }
+            }
+        }
+    }
+     // Este if solo funciona si no hay checkboxes marcados y solo hay algo en el search bar
+    else if( filtros.length === 0 && filtrosSearch.length > 0){
+        for ( let event of dataGlobal.events ){
+            if (event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtrosSearch)){
+                dataFiltered.push(event)
+            }
+        }
+    }
+    // Este if solo funciona si hay checkboxes marcados y no hay nada en el search bar
+    else if( filtros.length  > 0 && filtrosSearch.length === 0){
+        for (let filtro of filtros) {
+            for ( let event of dataGlobal.events ){
                 if ((event.category.toLowerCase() == filtro.toLowerCase()) || (event.category.toLowerCase() == filtrosSearch.toLowerCase()) && event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())) {
                     dataFiltered.push(event)
                 }
             }
         }
-    } else {
-        
+    }
+     else {   
         dataFiltered = dataGlobal.events;
     }
 
@@ -50,9 +72,10 @@ const imprimirData = (filtros) => {
 const categoryContainer = document.getElementById('filters');
 const categorias = (data) => {
     const categoriasUnicas = {};
+    let idCounter = 0;
     for (let event of data.events) {
         const categoria = event.category;
-
+        idCounter++
         if (!categoriasUnicas[categoria]) {
             const checkbox = document.createElement("div");
             checkbox.className = "form-check";
@@ -64,7 +87,7 @@ const categorias = (data) => {
                   value="${event.category}"
                   id="check${idCounter}"
                 />
-                <label class="form-check-label" for="check1"> ${event.category} </label>
+                <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>
             `
             categoryContainer.appendChild(checkbox)
             categoriasUnicas[categoria] = true; 
@@ -88,19 +111,17 @@ const addEventsListeners = () => {
             } else {
                 filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
                 imprimirData(filtros)
-
-
             }
         })
-    };
+    }
 }
 
 const inputSearch = document.querySelector(".form-control");
 inputSearch.addEventListener("change", () => {
     const eventsFiltrados = inputSearch.value;
-    console.log(filtros);
     filtrosSearch = eventsFiltrados;
-    console.log(filtrosSearch);
+    
+    imprimirData(filtros)
 })
 
 const buttonSearch = document.querySelector(".btn");
@@ -115,17 +136,10 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         return resp.json();
     })
         .then( data => {
+             
+            dataGlobal = data; 
             imprimirData([]);
-            categorias(data);
+            categorias(dataGlobal);
             getCategorys();
             addEventsListeners()
         }).catch( err => console.log(err));
-
-
-
-
-
-
-
-
-        
