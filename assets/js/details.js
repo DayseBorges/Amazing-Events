@@ -1,16 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-const urlParams = new URLSearchParams(location.search); 
-let id = urlParams.get('id');
-
-=======
-const urlParams = new URLSearchParams(location.search); 
-let id = urlParams.get('id');
-=======
 const urlParams = new URLSearchParams(location.search);
 let id = urlParams.get("id");
->>>>>>> e3dc3e527211be0ff4cf22fa450a64db756fab3a
+
 
 const detailsContainer = document.querySelector(".container-card");
 
@@ -48,7 +38,6 @@ const imprimirCard = (obj) => {
 };
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
-<<<<<<< HEAD
     .then(resp => {
         return resp.json();
     })
@@ -58,16 +47,6 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             imprimirCard(obj)
             
         }).catch( err => console.log(err));
->>>>>>> c5769d413cfbd8a93975ea80681f02baf9815fe7
 
-=======
-  .then((resp) => {
-    return resp.json();
-  })
-  .then((data) => {
-    console.log(data);
-    obj = data.events.find((iten) => iten._id == id);
-    imprimirCard(obj);
-  })
-  .catch((err) => console.log(err));
->>>>>>> e3dc3e527211be0ff4cf22fa450a64db756fab3a
+
+
