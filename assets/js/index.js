@@ -24,7 +24,6 @@ const imprimirData = (filtros) => {
             }
         }
     } else {
-        
         dataFiltered = dataGlobal.events;
     }
 
@@ -121,6 +120,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             categorias(dataGlobal);
             getCategorys();
             addEventsListeners()
+
         }).catch( err => console.log(err));
 
 
