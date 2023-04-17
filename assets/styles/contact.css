@@ -35,3 +35,9 @@
   background-color: #064a5c;
   border: solid 1px #1282a2;
 }
+
+@media screen and (max-width: 1230px) {
+  .container_main {
+    height: 45px;
+  }
+}

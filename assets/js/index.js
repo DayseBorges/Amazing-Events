@@ -129,7 +129,6 @@ inputSearch.addEventListener("change", () => {
 const buttonSearch = document.querySelector(".btn");
 buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
-    
 })
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
