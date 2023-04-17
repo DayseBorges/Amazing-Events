@@ -23,7 +23,7 @@ const imprimirData = (filtros) => {
             }
         }
     } else {
-        dataFiltered = dataGlobal.events.filter(event => event.date > dataGlobal.currentDate)
+        dataFiltered = dataGlobal.events.filter(event => event.date < dataGlobal.currentDate)
     }
     if (dataFiltered.length > 0) {
         for (let event of dataFiltered) {

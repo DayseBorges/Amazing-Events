@@ -10,7 +10,7 @@ const clearCardsContainerHTML = () => {
 
 const imprimirData = (filtros) => {
     clearCardsContainerHTML();
-    let dataFiltered = []
+    let dataFiltered = [];
 
     // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
 
@@ -53,6 +53,10 @@ const imprimirData = (filtros) => {
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
         cardDiv.classList.add("m-3");
+        cardDiv.setAttribute('id', `card-${event._id}`);
+        cardDiv.addEventListener('click', () => {
+            window.location.href = `../pages/details.html?id=${event._id}`;
+        });
         cardDiv.innerHTML = `
             <img src="${event.image}" class="card-img-top" alt="..." />
             <div class="card-body container-relative">
@@ -95,7 +99,7 @@ const categorias = (data) => {
                 <label class="form-check-label" for="check${idCounter}"> ${event.category} </label>
             `
             categoryContainer.appendChild(checkbox)
-            categoriasUnicas[categoria] = true; 
+            categoriasUnicas[categoria] = true;
         }
     }
 }

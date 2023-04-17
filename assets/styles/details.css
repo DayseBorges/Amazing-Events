@@ -1,5 +1,6 @@
-.card {
-    max-width: 780px;
+* {
+    margin: 0;
+    padding: 0;
 }
 
 .container-card{
@@ -9,11 +10,19 @@
     min-height: 40vw;
 }
 
-.card-img {
+.row-detail{
+    border: solid 1px rgb(221, 221, 221);
+    background-color: #c1cce1;
+    max-width: 60vw;
+    border-radius: 1vw;
+}
+
+.img {
     margin-top: 1vw;
-    margin-left: 1vw;
+    margin-bottom: 1vw;
     min-width: 20vw;
     min-height: 15vw;
+    border-radius: 1vw;
 }
 
 .card-body {
@@ -22,7 +31,7 @@
 }
 
 .card-body h5 {
-    color: #1282A2;
+    color: #ffffff;
     font-weight: 800;
 }
 

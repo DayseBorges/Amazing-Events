@@ -7,6 +7,8 @@ const clearCardsContainerHTML = () => {
 const filtrarEventos = (fecha, fechaEvento) => {
     let fechaApi = new Date(fecha);
     let fechaEventoDate = new Date(fechaEvento)
+    console.log(fechaApi);
+    console.log(fechaEventoDate);
     return fechaApi < fechaEventoDate;
 }
 const imprimirData = (filtros) => {
