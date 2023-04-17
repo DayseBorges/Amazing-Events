@@ -2,6 +2,7 @@ const cardsContainer = document.getElementById('cards_container');
 
 let filtros = []
 let dataGlobal = {}
+let filtrosSearch = "";
 
 const clearCardsContainerHTML = () => {
     cardsContainer.innerHTML = "";
@@ -11,10 +12,13 @@ const imprimirData = (filtros) => {
     clearCardsContainerHTML();
     let dataFiltered = []
 
+    // || event.name.toLowerCase().includes(filtro.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())
+
     if( filtros.length   > 0 ){
         for (let filtro of filtros) {
             for ( let event of dataGlobal.events ){
-                if ( event.category.toLowerCase() == filtro.toLowerCase()){
+
+                if ((event.category.toLowerCase() == filtro.toLowerCase()) || (event.category.toLowerCase() == filtrosSearch.toLowerCase()) && event.name.toLowerCase().includes(filtrosSearch.toLowerCase()) || event.description.toLowerCase().includes(filtro.toLowerCase())) {
                     dataFiltered.push(event)
                 }
             }
@@ -23,8 +27,8 @@ const imprimirData = (filtros) => {
         
         dataFiltered = dataGlobal.events;
     }
+
     
-    console.log(dataFiltered)
     for ( let event of dataFiltered ){
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
@@ -40,6 +44,7 @@ const imprimirData = (filtros) => {
             </div>
         `
         cardsContainer.appendChild(cardDiv)
+
     }
 };
 
@@ -68,6 +73,7 @@ const categorias = (data) => {
         }
     }
 }
+
 const getCategorys = () => {
     const inputs = document.querySelectorAll("input[type=checkbox]")
     return inputs;
@@ -84,12 +90,25 @@ const addEventsListeners = () => {
             } else {
                 filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
                 imprimirData(filtros)
-
-
             }
         })
     }
 }
+
+const inputSearch = document.querySelector(".form-control");
+inputSearch.addEventListener("change", () => {
+    const eventsFiltrados = inputSearch.value;
+    console.log(filtros);
+    filtrosSearch = eventsFiltrados;
+    console.log(filtrosSearch);
+})
+
+const buttonSearch = document.querySelector(".btn");
+buttonSearch.addEventListener("click", (event) => {
+    event.preventDefault();
+    
+})
+
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
@@ -102,6 +121,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             categorias(dataGlobal);
             getCategorys();
             addEventsListeners()
+            
         }).catch( err => console.log(err));
 
 
