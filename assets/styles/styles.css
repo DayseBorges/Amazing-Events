@@ -10,7 +10,9 @@
 main {
   height: relative;
 }
-
+.d-block {
+  height: 36.15vw;
+}
 .text-center {
   color: #1282a2;
   font-size: 2.4rem;
