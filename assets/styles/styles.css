@@ -6,6 +6,11 @@
 .header {
   background-color: #1282a2;
 }
+
+main {
+  height: relative;
+}
+
 .text-center {
   color: #1282a2;
   font-size: 2.4rem;

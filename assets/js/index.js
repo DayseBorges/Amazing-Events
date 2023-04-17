@@ -6,7 +6,6 @@ let dataGlobal = {}
 const clearCardsContainerHTML = () => {
     cardsContainer.innerHTML = "";
 }
-
 const imprimirData = (filtros) => {
     clearCardsContainerHTML();
     let dataFiltered = []
@@ -23,9 +22,7 @@ const imprimirData = (filtros) => {
         
         dataFiltered = dataGlobal.events;
     }
-    
-    console.log(dataFiltered)
-    for ( let event of dataFiltered ){
+        for ( let event of dataFiltered ){
         const cardDiv = document.createElement("div");
         cardDiv.className = "card";  
         cardDiv.classList.add("m-3");
@@ -42,7 +39,6 @@ const imprimirData = (filtros) => {
         cardsContainer.appendChild(cardDiv)
     }
 };
-
 const categoryContainer = document.getElementById('filters');
 const categorias = (data) => {
     const categoriasUnicas = {};
@@ -75,7 +71,6 @@ const getCategorys = () => {
 
 const addEventsListeners = () => {
     const inputs = getCategorys();
-    
     for (let input of inputs ){
         input.addEventListener('change', () => {
             if( input.checked ){
@@ -84,13 +79,10 @@ const addEventsListeners = () => {
             } else {
                 filtros = filtros.filter( filtro =>  filtro !== input.defaultValue )
                 imprimirData(filtros)
-
-
             }
         })
     }
 }
-
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resp => {
         return resp.json();
