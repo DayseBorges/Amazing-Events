@@ -43,9 +43,8 @@ const imprimirData = (filtros) => {
                     dataFiltered.push(event)
                 }
             }
-        }
-    }
-     else {   
+        } 
+    } else {
         dataFiltered = dataGlobal.events;
     }
 
