@@ -41,7 +41,7 @@ main {
   margin-top: 10px;
 }
 .container-main {
-  min-height: 31.45vw;
+  min-height: 34.8vw;
 }
 .container-relative {
   position: relative;
@@ -101,7 +101,8 @@ main {
 
 @media screen and (max-width: 1230px) {
  .footer {
-  width: 100%;
+    width: 100%;
+    padding: 6vw;
  }
   .search_bar {
     height: 10vw;
