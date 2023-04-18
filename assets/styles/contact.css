@@ -6,16 +6,22 @@
   color: #1282a2;
 }
 
+.dropdown-menu li{
+  background-color: #c0cbe6;
+}
+
+.form-contact {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .form-group {
-  min-width: 40vw;
+  min-width: 30vw;
   margin-top: 2vw;
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
-}
 
-.container-form {
-  display: flex;
-  justify-content: center;
 }
 
 .button {
@@ -30,8 +36,22 @@
 }
 
 .button:hover {
-  /* transform: scale(1.05);
-   transition: 0.5s; */
   background-color: #064a5c;
   border: solid 1px #1282a2;
+}
+
+@media screen and (max-width: 1230px) {
+  .margin {
+    margin-top: 20vw;
+    margin-bottom: 28vw;
+  }
+  .form-contact {
+    margin-top: 20vw;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .container-form {
+    min-height: 31.8vw;
+  }
 }
