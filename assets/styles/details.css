@@ -5,6 +5,10 @@
     font-family: "Quicksand", sans-serif;
 }
 
+.dropdown-menu li{
+    background-color: #c0cbe6;
+}
+
 .container-card{
     display: flex;
     justify-content: center;
@@ -62,5 +66,21 @@
     .card-body {
         margin-top: 3.2vw;
     }
-  }
+}
+
+@media screen and (max-width: 1200px) {
+    .row-detail{
+        max-width: 65vw;
+    }
+    .container-card {
+        margin-top: 35vw;
+        margin-bottom: 35vw;
+    }
+    .card-body {
+        max-width: 80vw;
+    }
+    .img {
+        width: 80%;
+    }
+}
 
