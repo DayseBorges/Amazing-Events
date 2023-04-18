@@ -4,8 +4,7 @@ import {
   displayCategories,
   createEventCard,
   createErrorMessage,
-  compararProperties,
-  checkIncludes,
+  filtrarData,
 } from "./functions.js";
 
 const inputSearch = document.querySelector(".form-control");
@@ -13,10 +12,14 @@ const buttonSearch = document.querySelector(".btn");
 const cardsContainer = document.getElementById("cards_container");
 const categoryContainer = document.getElementById("filters");
 
+let filtros = [];
+let dataGlobal = await getAllData();
+let filtroSearch = "";
+
 const setEventListeners = () => {
   inputSearch.addEventListener("change", () => {
-    filtrosSearch = inputSearch.value;
-    imprimirData(dataGlobal, filtros, filtrosSearch, cardsContainer);
+    filtroSearch = inputSearch.value;
+    imprimirData(dataGlobal, filtros, filtroSearch, cardsContainer, "all");
   });
 
   buttonSearch.addEventListener("click", (event) => {
@@ -27,81 +30,30 @@ const setEventListeners = () => {
     input.addEventListener("change", () => {
       if (input.checked) {
         filtros.push(input.defaultValue);
-        imprimirData(dataGlobal, filtros, filtrosSearch, cardsContainer);
+        imprimirData(dataGlobal, filtros, filtroSearch, cardsContainer, "all");
       } else {
         filtros = filtros.filter((filtro) => {
           return filtro !== input.defaultValue;
         });
-        imprimirData(dataGlobal, filtros, filtrosSearch, cardsContainer);
+        imprimirData(dataGlobal, filtros, filtroSearch, cardsContainer, "all");
       }
     });
   }
 };
-let filtros = [];
-let dataGlobal = await getAllData();
-let filtrosSearch = "";
+
 displayCategories(dataGlobal, categoryContainer);
 
 setEventListeners();
 
-export const imprimirData = (
+const imprimirData = (
   dataGlobal,
   filtros,
-  filtrosSearch,
-  cardsContainer
+  filtroSearch,
+  cardsContainer,
+  dateStatus
 ) => {
   cardsContainer.innerHTML = "";
-  let dataFiltered = [];
-
-  // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
-  if (filtros.length > 0 && filtrosSearch.length > 0) {
-    for (let filtro of filtros) {
-      for (let event of dataGlobal.events) {
-        if (compararProperties(event.category, filtro)) {
-          if (
-            checkIncludes(event.name, filtrosSearch) ||
-            checkIncludes(event.description, filtrosSearch)
-          ) {
-            dataFiltered.push(event);
-          }
-        }
-      }
-    }
-  }
-  // Este if solo funciona si no hay checkboxes marcados y solo hay algo en el search bar
-  else if (filtros.length === 0 && filtrosSearch.length > 0) {
-    for (let event of dataGlobal.events) {
-      if (
-        checkIncludes(event.name, filtrosSearch) ||
-        checkIncludes(event.description, filtrosSearch)
-      ) {
-        dataFiltered.push(event);
-      }
-    }
-  }
-  // Este if solo funciona si hay checkboxes marcados y no hay nada en el search bar
-  else if (filtros.length > 0 && filtrosSearch.length === 0) {
-    for (let filtro of filtros) {
-      for (let event of dataGlobal.events) {
-        if (
-          compararProperties(
-            event.category.toLowerCase(),
-            filtro.toLowerCase()
-          ) ||
-          (compararProperties(
-            event.category.toLowerCase(),
-            filtrosSearch.toLowerCase()
-          ) &&
-            checkIncludes(event.name, filtrosSearch)) ||
-          checkIncludes(event.description, filtro)
-        ) {
-          dataFiltered.push(event);
-        }
-      }
-    }
-  } else {
-    dataFiltered = dataGlobal.events;
-  }
+  let dataFiltered = filtrarData(dataGlobal, filtros, filtroSearch, dateStatus);
   if (dataFiltered.length > 0) {
     for (let event of dataFiltered) {
       cardsContainer.appendChild(createEventCard(event));
@@ -111,4 +63,4 @@ export const imprimirData = (
   }
 };
 
-imprimirData(dataGlobal, filtros, filtrosSearch, cardsContainer);
+imprimirData(dataGlobal, filtros, filtroSearch, cardsContainer, "all");

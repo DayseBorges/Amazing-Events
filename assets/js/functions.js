@@ -9,6 +9,7 @@ export {
   createErrorMessage,
   comprobarDate,
   cardDetails,
+  filtrarData,
 };
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
@@ -84,14 +85,21 @@ const checkIncludes = (prop1, prop2) => {
 const comprobarDate = (date1, date2, condicion) => {
   if (condicion === "upcoming") {
     return date1 > date2;
-  } else {
+  } else if (condicion === "past") {
     return date1 < date2;
+  } else {
+    return true;
   }
 };
 
 const cardDetails = (obj, detailsContainer) => {
   const cardDetails = document.createElement("div");
-  cardDetails.classList.add("row", "row-detail", "no-gutters", "margin-details");
+  cardDetails.classList.add(
+    "row",
+    "row-detail",
+    "no-gutters",
+    "margin-details"
+  );
   cardDetails.innerHTML = `
                 <div class="col-md-5 col-sm-12 img-detail">
                   <img
@@ -108,13 +116,102 @@ const cardDetails = (obj, detailsContainer) => {
                     ${obj.description}
                     </p>
                     <div class="list-group list">
-                        <li class="list-group-item list-group-item-action">Fecha: ${new Date(obj.date).toLocaleString().slice(0, 9)}</li>
-                        <li class="list-group-item list-group-item-action">Local: ${obj.place}</li>
-                        <li class="list-group-item list-group-item-action">Pecio: $ ${obj.price}</li>
+                        <li class="list-group-item list-group-item-action">Fecha: ${new Date(
+                          obj.date
+                        )
+                          .toLocaleString()
+                          .slice(0, 9)}</li>
+                        <li class="list-group-item list-group-item-action">Local: ${
+                          obj.place
+                        }</li>
+                        <li class="list-group-item list-group-item-action">Pecio: $ ${
+                          obj.price
+                        }</li>
                     </div>
                   </div>
                 </div>
               </div> 
     `;
-    detailsContainer.appendChild(cardDetails);
-}
+  detailsContainer.appendChild(cardDetails);
+};
+
+const filtrarData = (
+  dataGlobal,
+  arregloFiltrosPorCategoria,
+  filtroSearch,
+  dateStatus
+) => {
+  let dataFiltered = [];
+  // Este if solo funciona si hay checkboxes marcados y no hay algo en el search bar
+  if (arregloFiltrosPorCategoria.length > 0 && filtroSearch.length > 0) {
+    for (let filtro of arregloFiltrosPorCategoria) {
+      for (let event of dataGlobal.events) {
+        if (
+          compararProperties(event.category, filtro) &&
+          comprobarDate(event.date, dataGlobal.currentDate, dateStatus)
+        ) {
+          if (
+            checkIncludes(event.name, filtroSearch) ||
+            checkIncludes(event.description, filtroSearch)
+          ) {
+            dataFiltered.push(event);
+          }
+        }
+      }
+    }
+  }
+  // Este if solo funciona si no hay checkboxes marcados y solo hay algo en el search bar
+  else if (arregloFiltrosPorCategoria.length === 0 && filtroSearch.length > 0) {
+    for (let event of dataGlobal.events) {
+      if (
+        (checkIncludes(event.name, filtroSearch) ||
+          checkIncludes(event.description, filtroSearch)) &&
+        comprobarDate(event.date, dataGlobal.currentDate, dateStatus)
+      ) {
+        dataFiltered.push(event);
+      }
+    }
+  }
+  // Este if solo funciona si hay checkboxes marcados y no hay nada en el search bar
+  else if (arregloFiltrosPorCategoria.length > 0 && filtroSearch.length === 0) {
+    for (let filtro of arregloFiltrosPorCategoria) {
+      for (let event of dataGlobal.events) {
+        if (
+          (compararProperties(
+            event.category.toLowerCase(),
+            filtro.toLowerCase()
+          ) ||
+            (compararProperties(
+              event.category.toLowerCase(),
+              filtroSearch.toLowerCase()
+            ) &&
+              checkIncludes(event.name, filtroSearch)) ||
+            checkIncludes(event.description, filtro)) &&
+          comprobarDate(event.date, dataGlobal.currentDate, dateStatus)
+        ) {
+          dataFiltered.push(event);
+        }
+      }
+    }
+  } else {
+    dataFiltered = dataGlobal.events.filter((event) =>
+      comprobarDate(event.date, dataGlobal.currentDate, dateStatus)
+    );
+  }
+  console.log(dataFiltered);
+  return dataFiltered;
+};
+
+// if (arregloFiltrosPorCategoria.length > 0) {
+// console.log("hay filtro de categoria");
+// arregloFiltrosPorCategoria.forEach((filtroCategoria) => {
+//   for (let event of dataGlobal) {
+//     if (
+//       compararProperties(event.category, filtroCategoria) ||
+//       Object.entries(event).includes(filtroSearch)
+//     ) {
+//       dataFiltered.push(event);
+//     }
+//   }
+// });
+// }
