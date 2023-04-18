@@ -8,6 +8,7 @@ export {
   checkIncludes,
   createErrorMessage,
   comprobarDate,
+  cardDetails,
 };
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
@@ -87,3 +88,33 @@ const comprobarDate = (date1, date2, condicion) => {
     return date1 < date2;
   }
 };
+
+const cardDetails = (obj, detailsContainer) => {
+  const cardDetails = document.createElement("div");
+  cardDetails.classList.add("row", "row-detail", "no-gutters", "margin-details");
+  cardDetails.innerHTML = `
+                <div class="col-md-5 col-sm-12 img-detail">
+                  <img
+                    src=${obj.image}
+                    class="img col-sm-12"
+                    alt="Imagen del Evento"
+                  />
+                </div>
+                <div class="col-md-7 col-sm-12">
+                  <div class="card-body">
+                    <h5 class="card-title">${obj.name}</h5>
+                    <p class="text-category">${obj.category}</p>
+                    <p class="card-text">
+                    ${obj.description}
+                    </p>
+                    <div class="list-group list">
+                        <li class="list-group-item list-group-item-action">Fecha: ${new Date(obj.date).toLocaleString().slice(0, 9)}</li>
+                        <li class="list-group-item list-group-item-action">Local: ${obj.place}</li>
+                        <li class="list-group-item list-group-item-action">Pecio: $ ${obj.price}</li>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+    `;
+    detailsContainer.appendChild(cardDetails);
+}
