@@ -10,6 +10,7 @@ export {
   comprobarDate,
   cardDetails,
 };
+
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
   let eventsData = await response.json();
