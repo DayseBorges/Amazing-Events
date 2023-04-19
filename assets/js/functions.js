@@ -254,7 +254,7 @@ const filtrarData = (
 const tableEvent = (arr1, arr2, arr3, container) => {
   let limit = 0;
   if (container.classList.contains("table1")) {
-    limit = 5;
+    limit = 1;
   } else {
     limit = arr1.length;
   }
