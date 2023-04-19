@@ -10,6 +10,15 @@ export {
   cardDetails,
   filtrarData,
   tableEvent,
+  getEventsMajorCapacity,
+  getEventsMenorPorcentaje,
+  getEventsMajorPorcentaje,
+  getAllCategories,
+  getEventosPorCategoria,
+  calcularGananciaPorCategoria,
+  getGananciasPorCategoria,
+  getPorcentajeAsistenciaUpcoming,
+  getPorcentajeAsistenciaPast,
 };
 
 const getAllData = async () => {
@@ -17,6 +26,15 @@ const getAllData = async () => {
   let eventsData = await response.json();
 
   return eventsData;
+};
+const getAllCategories = (data) => {
+  let categories = [];
+  data.events.forEach((event) => {
+    if (!categories.includes(event.category)) {
+      categories.push(event.category);
+    }
+  });
+  return categories;
 };
 
 const displayCategories = (data, categoryContainer) => {
@@ -32,6 +50,45 @@ const displayCategories = (data, categoryContainer) => {
     }
   }
 };
+const getEventosPorCategoria = (categoria, eventos) => {
+  return eventos.filter((event) => event.category === categoria);
+};
+const calcularGananciaPorCategoria = (eventosPorCategoria, estado) => {
+  return `$ ${eventosPorCategoria
+    .map((evento) =>
+      estado.includes("past")
+        ? evento.price * evento.assistance
+        : evento.price * evento.estimate
+    )
+    .reduce((accum, curr) => accum + (curr || 0), 0)}`;
+};
+const getGananciasPorCategoria = (categorias, events, estado) =>
+  categorias.map((categoria) => {
+    return calcularGananciaPorCategoria(
+      getEventosPorCategoria(categoria, events),
+      estado
+    );
+  });
+const getPorcentajeAsistenciaUpcoming = (categorias, events) =>
+  categorias.map((categoria) => {
+    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
+    return `${parseFloat(
+      eventosPorCategoria
+        .map((evento) => (evento.estimate / evento.capacity) * 100)
+        .reduce((accum, curr) => accum + (curr || 0), 0) /
+        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
+    ).toFixed(2)}%`;
+  });
+const getPorcentajeAsistenciaPast = (categorias, events) =>
+  categorias.map((categoria) => {
+    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
+    return `${parseFloat(
+      eventosPorCategoria
+        .map((evento) => (evento.assistance / evento.capacity) * 100)
+        .reduce((accum, curr) => accum + (curr || 0), 0) /
+        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
+    ).toFixed(2)}%`;
+  });
 const createCheckbox = (category, idCounter) => {
   const checkbox = document.createElement("div");
   checkbox.className = "form-check";
@@ -92,12 +149,7 @@ const comprobarDate = (date1, date2, condicion) => {
 
 const cardDetails = (obj, detailsContainer) => {
   const cardDetails = document.createElement("div");
-  cardDetails.classList.add(
-    "row",
-    "row-detail",
-  
-    
-  );
+  cardDetails.classList.add("row", "row-detail");
   cardDetails.innerHTML = `
                 <div class="col-md-5 col-sm-12 img-detail">
                   <img
@@ -200,28 +252,42 @@ const filtrarData = (
 };
 
 const tableEvent = (arr1, arr2, arr3, container) => {
-    for (let i = 0; i < 5; i++) {
-      const tableDetail = document.createElement("tr");
-      tableDetail.innerHTML = `
+  let limit = 0;
+  if (container.classList.contains("table1")) {
+    limit = 5;
+  } else {
+    limit = arr1.length;
+  }
+  for (let i = 0; i < limit; i++) {
+    const tableDetail = document.createElement("tr");
+    tableDetail.innerHTML = `
                     <td>${arr1[i]}</td>
                     <td>${arr2[i]}</td>
                     <td>${arr3[i]}</td>
         `;
-        container.appendChild(tableDetail);
-    }   
-  };
- 
+    container.appendChild(tableDetail);
+  }
+};
 
-// if (arregloFiltrosPorCategoria.length > 0) {
-// console.log("hay filtro de categoria");
-// arregloFiltrosPorCategoria.forEach((filtroCategoria) => {
-//   for (let event of dataGlobal) {
-//     if (
-//       compararProperties(event.category, filtroCategoria) ||
-//       Object.entries(event).includes(filtroSearch)
-//     ) {
-//       dataFiltered.push(event);
-//     }
-//   }
-// });
-// }
+const getEventsMajorPorcentaje = (events) => {
+  return events
+    .map((event) => {
+      return (event.assistance * 100) / event.capacity && event.name;
+    })
+    .sort();
+};
+const getEventsMenorPorcentaje = (events) => {
+  return events
+    .map((event) => {
+      return (event.assistance * 100) / event.capacity && event.name;
+    })
+    .sort()
+    .toReversed();
+};
+const getEventsMajorCapacity = (events) => {
+  return events
+    .sort((a, b) => b.capacity - a.capacity)
+    .map((event) => {
+      return event.name;
+    });
+};
