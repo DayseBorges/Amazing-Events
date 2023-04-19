@@ -111,4 +111,12 @@ main {
   .container-main {
     min-height: 31.45vw;
   }
+  .nav-item a {
+    font-size: 3.4vw;
+    display: flex;
+    justify-content: end;
+  }
+  .nav-item a:hover {
+    margin-right: 20px;
+  }
 }

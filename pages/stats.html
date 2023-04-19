@@ -64,10 +64,7 @@
           >
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a
-                  class="nav-link"
-                  aria-current="page"
-                  href="../index.html"
+                <a class="nav-link" aria-current="page" href="../index.html"
                   >Home</a
                 >
               </li>
@@ -105,104 +102,52 @@
         </div>
       </nav>
     </header>
-    <main>
+    <main class="container-main">
       <div class="title">
         <h1>Estadísticas</h1>
       </div>
 
       <div class="container-table">
+        <h4>Estadísticas de Eventos</h4>
         <table class="table">
           <thead class="thead-light estadisticas">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Estadísticas de Eventos</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th>Eventos con major porcentaje de asistencia</th>
+              <th>Eventos con menor porcentaje de asistencia</th>
+              <th>Eventos con major porcentaje de capacidad</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Cine</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Concierto de musica</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
+          <tbody class="table1">
           </tbody>
         </table>
 
+        <h4>
+          Estadísticas de Próximos Eventos por Categoría
+        </h4>
         <table class="table">
           <thead class="thead-light estadisticas">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">
-                Estadísticas de Próximos Eventos por Categoría
-              </th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th>Categorías</th>
+              <th>Ingresos</th>
+              <th>Porcentaje de asistencia</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Cine</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Concierto de musica</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
+          <tbody class="table2">
           </tbody>
         </table>
 
+        <h4>
+          Estadísticas de Eventos Pasados por Categoría
+        </h4>
         <table class="table">
           <thead class="thead-light estadisticas">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Estadísticas de Eventos Pasados por Categoría</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th>Categorías</th>
+              <th>Ingresos</th>
+              <th>Porcentaje de asistencia</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Cine</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Concierto de musica</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>50%</td>
-              <td>20%</td>
-            </tr>
+          <tbody class="table3">
           </tbody>
         </table>
       </div>
@@ -220,5 +165,6 @@
         ></a>
       </div>
     </footer>
+    <script type="module" src="../assets/js/stats.js"></script>
   </body>
 </html>

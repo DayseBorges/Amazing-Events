@@ -10,6 +10,7 @@ export {
   comprobarDate,
   cardDetails,
   filtrarData,
+  tableEvent,
 };
 
 const getAllData = async () => {
@@ -98,7 +99,7 @@ const cardDetails = (obj, detailsContainer) => {
   cardDetails.classList.add(
     "row",
     "row-detail",
-    
+  
     
   );
   cardDetails.innerHTML = `
@@ -202,6 +203,19 @@ const filtrarData = (
   console.log(dataFiltered);
   return dataFiltered;
 };
+
+const tableEvent = (arr1, arr2, arr3, container) => {
+    for (let i = 0; i < 5; i++) {
+      const tableDetail = document.createElement("tr");
+      tableDetail.innerHTML = `
+                    <td>${arr1[i]}</td>
+                    <td>${arr2[i]}</td>
+                    <td>${arr3[i]}</td>
+        `;
+        container.appendChild(tableDetail);
+    }   
+  };
+ 
 
 // if (arregloFiltrosPorCategoria.length > 0) {
 // console.log("hay filtro de categoria");
