@@ -94,8 +94,8 @@ const cardDetails = (obj, detailsContainer) => {
   cardDetails.classList.add(
     "row",
     "row-detail",
-    "no-gutters",
-    "margin-details"
+    
+    
   );
   cardDetails.innerHTML = `
                 <div class="col-md-5 col-sm-12 img-detail">

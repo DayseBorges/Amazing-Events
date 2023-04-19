@@ -10,16 +10,18 @@
   background-color: #c0cbe6;
 }
 
+.form-contact {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .form-group {
-  min-width: 40vw;
+  min-width: 30vw;
   margin-top: 2vw;
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
-}
 
-.container-form {
-  display: flex;
-  justify-content: center;
 }
 
 .button {
@@ -39,8 +41,12 @@
 }
 
 @media screen and (max-width: 1230px) {
-  .container_main {
-    height: 45px;
+  .margin {
+    margin-top: 20vw;
+    margin-bottom: 28vw;
+  }
+  .form-contact {
+    margin-top: 20vw;
   }
 }
 
