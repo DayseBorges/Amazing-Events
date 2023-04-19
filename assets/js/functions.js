@@ -1,6 +1,5 @@
 export {
   getAllData,
-  getCategorys,
   displayCategories,
   createCheckbox,
   createEventCard,
@@ -18,10 +17,7 @@ const getAllData = async () => {
 
   return eventsData;
 };
-const getCategorys = () => {
-  const inputs = document.querySelectorAll("input[type=checkbox]");
-  return inputs;
-};
+
 const displayCategories = (data, categoryContainer) => {
   const categoriasUnicas = {};
   let idCounter = 0;
@@ -199,7 +195,6 @@ const filtrarData = (
       comprobarDate(event.date, dataGlobal.currentDate, dateStatus)
     );
   }
-  console.log(dataFiltered);
   return dataFiltered;
 };
 
