@@ -1,7 +1,7 @@
 import { getAllData, cardDetails } from "./functions.js";
 
 let dataGlobal = await getAllData();
-
+console.log(dataGlobal.events);
 const urlParams = new URLSearchParams(location.search);
 let id = urlParams.get("id");
 
