@@ -36,11 +36,10 @@ const getAllData = async () => {
   return eventsData;
 };
 
-/**
- * Filtrar todas las categorias de estos eventos
- * @param {Array<Object>} data acceder a data.events (arreglo de eventos)
- * @returns {Array<String>} arreglo de categorias(nombre)
- */
+// Parametros: Arreglo de eventos
+// Accion: Filtrar todas las categorias de estos eventos
+// Salida: Array con el nombre de las categorias
+
 const getAllCategories = (data) => {
   let categories = [];
   data.events.forEach((event) => {
@@ -365,7 +364,6 @@ const getPorcentajeAsistenciaUpcoming = (categorias, events) =>
  * @param {Array<Object>} events eventos (Pasados)
  * @returns {Array<Number>}  Arreglo que contiene el porcentaje de asistencia de cada categoria ya convertido a %
  */
-
 const getPorcentajeAsistenciaPast = (categorias, events) =>
   categorias.map((categoria) => {
     const eventosPorCategoria = getEventosPorCategoria(categoria, events);
@@ -388,7 +386,6 @@ const getEventsMajorPorcentaje = (events) => {
     })
     .sort()
     .toReversed();
-  console.log(eventosProbando);
   return eventosProbando;
 };
 /**
