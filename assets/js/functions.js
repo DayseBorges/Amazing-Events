@@ -20,6 +20,10 @@ export {
   getPorcentajeAsistenciaUpcoming,
   getPorcentajeAsistenciaPast,
 };
+
+// Entrada:
+// Accion:
+// Salida:
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
   let eventsData = await response.json();
@@ -57,7 +61,8 @@ const calcularGananciaPorCategoria = (eventosPorCategoria, estado) => {
         ? evento.price * evento.assistance
         : evento.price * evento.estimate
     )
-    .reduce((accum, curr) => accum + (curr || 0), 0).toLocaleString()}`;
+    .reduce((accum, curr) => accum + (curr || 0), 0)
+    .toLocaleString()}`;
 };
 const getGananciasPorCategoria = (categorias, events, estado) =>
   categorias.map((categoria) => {
@@ -241,10 +246,8 @@ const filtrarData = (
   return dataFiltered;
 };
 const tableEvent = (arr1, arr2, arr3, container) => {
-  let limit = 0;
-  if (container.classList.contains("table1")) {
-    limit = 1;
-  } else {
+  let limit = 1;
+  if (!container.classList.contains("table1")) {
     limit = arr1.length;
   }
   for (let i = 0; i < limit; i++) {
@@ -259,13 +262,11 @@ const tableEvent = (arr1, arr2, arr3, container) => {
 };
 
 const getEventsMajorPorcentaje = (events) => {
-  let arrOrdenado = events
+  return events
     .map((event) => {
       return (event.assistance * 100) / event.capacity && event.name;
     })
     .sort();
-
-  return arrOrdenado[0];
 };
 const getEventsMenorPorcentaje = (events) => {
   return events
