@@ -60,7 +60,7 @@ const calcularGananciaPorCategoria = (eventosPorCategoria, estado) => {
         ? evento.price * evento.assistance
         : evento.price * evento.estimate
     )
-    .reduce((accum, curr) => accum + (curr || 0), 0)}`;
+    .reduce((accum, curr) => accum + (curr || 0), 0).toLocaleString()}`;
 };
 const getGananciasPorCategoria = (categorias, events, estado) =>
   categorias.map((categoria) => {
