@@ -28,7 +28,7 @@ main {
   color: #ffffff;
   font-size: 1.4vw;
 }
-.dropdown-menu li{
+.dropdown-menu li {
   background-color: #c0cbe6;
 }
 .card {
@@ -100,16 +100,16 @@ main {
 }
 
 @media screen and (max-width: 1230px) {
- .footer {
+  .footer {
     width: 100%;
     padding: 6vw;
- }
+  }
   .search_bar {
     height: 10vw;
     width: 120vw;
   }
   .container-main {
-    min-height: 31.45vw;
+    min-height: 57vh;
   }
   .nav-item a {
     font-size: 3.4vw;
