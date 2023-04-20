@@ -376,18 +376,20 @@ const getPorcentajeAsistenciaPast = (categorias, events) =>
         (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
     ).toFixed(2)}%`;
   });
-
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
  * @param {Array<Object>} events Array de eventos
  * @returns {Array<Number>} Arreglo ordenado de mayor a menor que contiene el porcentaje de asistencia de cada evento
  */
 const getEventsMajorPorcentaje = (events) => {
-  return events
+  const eventosProbando = events
     .map((event) => {
-      return (event.assistance * 100) / event.capacity && event.name;
+      return (event.assistance / event.capacity) * 100 && event.name;
     })
-    .sort();
+    .sort()
+    .toReversed();
+  console.log(eventosProbando);
+  return eventosProbando;
 };
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
@@ -397,10 +399,12 @@ const getEventsMajorPorcentaje = (events) => {
 const getEventsMenorPorcentaje = (events) => {
   return events
     .map((event) => {
-      return (event.assistance * 100) / event.capacity && event.name;
+      if (event.name.includes("Metallica in concert")) {
+        console.log(event);
+      }
+      return (event.assistance / event.capacity) * 100 && event.name;
     })
-    .sort()
-    .toReversed();
+    .sort();
 };
 
 /**
@@ -415,7 +419,7 @@ const getEventsMajorCapacity = (events) => {
       return event.name;
     });
 };
-AmazingEventsFunctions.exports = {
+const AmazingEventsFunctions = {
   getAllData,
   displayCategories,
   createCheckbox,
