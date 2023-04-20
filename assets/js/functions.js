@@ -21,14 +21,17 @@ export {
   getPorcentajeAsistenciaPast,
 };
 
-// Entrada:
-// Accion:
-// Salida:
+// Parametros: -
+// Accion: Hace una promesa y nos devuelve el objeto global de eventos
+// Salida:  Objeto que tiene una prop currentDate y un array de eventos
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
   let eventsData = await response.json();
   return eventsData;
 };
+// Parametros: Arreglo de eventos
+// Accion: Filtrar todas las categorias de estos eventos
+// Salida: Array con el nombre de las categorias
 const getAllCategories = (data) => {
   let categories = [];
   data.events.forEach((event) => {
@@ -38,59 +41,28 @@ const getAllCategories = (data) => {
   });
   return categories;
 };
+// Parametros: Array de Eventos (para despues sacar categorias) y contenedor de los checboxes
+// Accion:  Iterar el array de categorias y por cada una crear un checkbox
+// Salida: -
 const displayCategories = (data, categoryContainer) => {
-  const categoriasUnicas = {};
-  let idCounter = 0;
-  for (let event of data.events) {
-    const categoria = event.category;
+  const categoriasUnicas = getAllCategories(data);
+  let idCounter = 1;
+  for (let categoria of categoriasUnicas) {
+    const checkbox = createCheckbox(categoria, idCounter);
+    categoryContainer.appendChild(checkbox);
     idCounter++;
-    if (!categoriasUnicas[categoria]) {
-      const checkbox = createCheckbox(categoria, idCounter);
-      categoryContainer.appendChild(checkbox);
-      categoriasUnicas[categoria] = true;
-    }
   }
 };
+// Parametros: Nombre de la Categoria y Arreglo de eventos
+// Accion: Filtrar todos los eventos que tengan la categoria
+// Salida: Arreglo de eventos de X categoria
 const getEventosPorCategoria = (categoria, eventos) => {
   return eventos.filter((event) => event.category === categoria);
 };
-const calcularGananciaPorCategoria = (eventosPorCategoria, estado) => {
-  return `$ ${eventosPorCategoria
-    .map((evento) =>
-      estado.includes("past")
-        ? evento.price * evento.assistance
-        : evento.price * evento.estimate
-    )
-    .reduce((accum, curr) => accum + (curr || 0), 0)
-    .toLocaleString()}`;
-};
-const getGananciasPorCategoria = (categorias, events, estado) =>
-  categorias.map((categoria) => {
-    return calcularGananciaPorCategoria(
-      getEventosPorCategoria(categoria, events),
-      estado
-    );
-  });
-const getPorcentajeAsistenciaUpcoming = (categorias, events) =>
-  categorias.map((categoria) => {
-    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
-    return `${parseFloat(
-      eventosPorCategoria
-        .map((evento) => (evento.estimate / evento.capacity) * 100)
-        .reduce((accum, curr) => accum + (curr || 0), 0) /
-        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
-    ).toFixed(2)}%`;
-  });
-const getPorcentajeAsistenciaPast = (categorias, events) =>
-  categorias.map((categoria) => {
-    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
-    return `${parseFloat(
-      eventosPorCategoria
-        .map((evento) => (evento.assistance / evento.capacity) * 100)
-        .reduce((accum, curr) => accum + (curr || 0), 0) /
-        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
-    ).toFixed(2)}%`;
-  });
+
+// Parametros: Nombre de la categoria y numero de ID
+// Accion: Crear un elemento HTML con sus respectivas clases
+// Salida: Div que contiene un checkbox con la info de la categoria
 const createCheckbox = (category, idCounter) => {
   const checkbox = document.createElement("div");
   checkbox.className = "form-check";
@@ -105,6 +77,9 @@ const createCheckbox = (category, idCounter) => {
                 <label class="form-check-label" for="check${idCounter}"> ${category} </label>`;
   return checkbox;
 };
+// Parametros: Objeto de un Evento con sus propiedades
+// Accion: Crear un elemento HTML con sus respectivas clases
+// Salida: Div que contiene una card con la info del evento
 const createEventCard = (event) => {
   const cardDiv = document.createElement("div");
   cardDiv.className = "card";
@@ -121,6 +96,9 @@ const createEventCard = (event) => {
     `;
   return cardDiv;
 };
+// Parametros: -
+// Accion: Crear un elemento HTML con sus respectivas clases
+// Salida: H2 que tiene un mensaje de error
 const createErrorMessage = () => {
   let errorMessage = document.createElement("h2");
   errorMessage.classList.add("text-center");
@@ -128,12 +106,21 @@ const createErrorMessage = () => {
     "No se encontraron elementos que coincidan con tu busqueda.";
   return errorMessage;
 };
+// Parametros: Propiedad 1 y Propiedad 2
+// Accion: Comparar las dos propiedades
+// Salida: Booleano que retorna true si las dos propiedas son iguales
 const compararProperties = (prop1, prop2) => {
   return prop1.toLowerCase() === prop2.toLowerCase();
 };
+// Parametros: Propiedad 1 y Propiedad 2
+// Accion: Comparar las dos propiedades con includes
+// Salida: Booleano que retorna true si una propiedad incluye el valor de la otra
 const checkIncludes = (prop1, prop2) => {
   return prop1.toLowerCase().includes(prop2.toLowerCase());
 };
+// Parametros: Fecha1, Fecha2, Condicion ("past" o "upcoming")
+// Accion: Si el estado es "upcoming"  retorna si la fecha 1 es mayor a la otra, si es "past" hace lo contrario
+// Salida:
 const comprobarDate = (date1, date2, condicion) => {
   if (condicion === "upcoming") {
     return date1 > date2;
@@ -143,6 +130,9 @@ const comprobarDate = (date1, date2, condicion) => {
     return true;
   }
 };
+// Parametros: Objeto de un Evento, y Contenedor HTML
+// Accion: Crear un elemento HTML con la info del evento
+// Salida: Div con la info del evento
 const cardDetails = (obj, detailsContainer) => {
   const cardDetails = document.createElement("div");
   cardDetails.classList.add("row", "row-detail");
@@ -180,6 +170,11 @@ const cardDetails = (obj, detailsContainer) => {
     `;
   detailsContainer.appendChild(cardDetails);
 };
+// Parametros: Recibe toda la info que trae de la API, un arreglo de los filtros que estan marcados (o no), y
+// un string con el filtro captura por el search y un estado de tiempo ("past" "upcoming")
+// Accion: Se fija las longitudes de los filtros y dependiendo de eso filtra los eventos en un arreglo
+// Basicamente lo que permite es acumular los filtros y poder usarlos cruzados
+// Salida: Arreglo de eventos filtrados
 const filtrarData = (
   dataGlobal,
   arregloFiltrosPorCategoria,
@@ -245,6 +240,10 @@ const filtrarData = (
   }
   return dataFiltered;
 };
+// Parametros: arreglo1, arreglo2, arreglo3 (Cada arreglo corresponde a una columna de la tabla) y el container
+// que seria la tabla donde van  a aparecer
+// Accion: Iterar  cada arreglo y imprimir por cada elemento un TD
+// Salida: -
 const tableEvent = (arr1, arr2, arr3, container) => {
   let limit = 1;
   if (!container.classList.contains("table1")) {
@@ -261,6 +260,58 @@ const tableEvent = (arr1, arr2, arr3, container) => {
   }
 };
 
+// Parametros: Arreglo de eventos por categoria, estado que seria "past" o "upcoming", porque cambian las propiedades (assistance, estimate)
+// Accion: Reducir las ganancias de cada evento de la categoria a un solo valor
+// Salida: Numero de las ganancias de cada evento de la categoria, ya con el signo de $
+const calcularGananciaPorCategoria = (eventosPorCategoria, estado) => {
+  return `$ ${eventosPorCategoria
+    .map((evento) =>
+      estado.includes("past")
+        ? evento.price * evento.assistance
+        : evento.price * evento.estimate
+    )
+    .reduce((accum, curr) => accum + (curr || 0), 0)
+    .toLocaleString()}`;
+};
+// Parametros: Arreglo de categorias, eventos (para llamar a getEventosPorCategoria) y estado (para llamar a calcularGananciaPorCategoria)
+// Accion: Iterar el arreglo de categorias y por cada categoria llamar a calcularGananciaPorCategoria()
+// Salida: Arreglo con las ganancias de cada categoria
+const getGananciasPorCategoria = (categorias, events, estado) =>
+  categorias.map((categoria) => {
+    return calcularGananciaPorCategoria(
+      getEventosPorCategoria(categoria, events),
+      estado
+    );
+  });
+// Parametros: Arreglo de categorias y eventos (Futuros)
+// Accion: Por cada categoria  iterar sus eventos y calcular el porcentaje de asistencia que tuvieron
+// Salida: Arreglo que contiene el porcentaje de asistencia de cada categoria ya convertido a %
+const getPorcentajeAsistenciaUpcoming = (categorias, events) =>
+  categorias.map((categoria) => {
+    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
+    return `${parseFloat(
+      eventosPorCategoria
+        .map((evento) => (evento.estimate / evento.capacity) * 100)
+        .reduce((accum, curr) => accum + (curr || 0), 0) /
+        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
+    ).toFixed(2)}%`;
+  });
+// Parametros: Arreglo de categorias y eventos (Pasados)
+// Accion: Por cada categoria  iterar sus eventos y calcular el porcentaje de asistencia que tuvieron
+// Salida: Arreglo que contiene el porcentaje de asistencia de cada categoria ya convertido a %
+const getPorcentajeAsistenciaPast = (categorias, events) =>
+  categorias.map((categoria) => {
+    const eventosPorCategoria = getEventosPorCategoria(categoria, events);
+    return `${parseFloat(
+      eventosPorCategoria
+        .map((evento) => (evento.assistance / evento.capacity) * 100)
+        .reduce((accum, curr) => accum + (curr || 0), 0) /
+        (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
+    ).toFixed(2)}%`;
+  });
+// Parametros: Arreglo de  eventos
+// Accion: Por cada evento calcular el porcentaje de asistencia que tuvieron
+// Salida: Arreglo ordenado de mayor a menor que contiene el porcentaje de asistencia de cada evento
 const getEventsMajorPorcentaje = (events) => {
   return events
     .map((event) => {
@@ -268,6 +319,9 @@ const getEventsMajorPorcentaje = (events) => {
     })
     .sort();
 };
+// Parametros: Arreglo de   eventos
+// Accion: Por cada evento calcular el porcentaje de asistencia que tuvieron
+// Salida: Arreglo ordenado de menor a mayor que contiene el porcentaje de asistencia de cada evento
 const getEventsMenorPorcentaje = (events) => {
   return events
     .map((event) => {
@@ -276,6 +330,9 @@ const getEventsMenorPorcentaje = (events) => {
     .sort()
     .toReversed();
 };
+// Parametros: Arreglo de evento
+// Accion: Por cada evento calcular cual tiene mayor capacidad
+// Salida: Arreglo ordenado de mayor a menor que contiene la capacidad de cada evento
 const getEventsMajorCapacity = (events) => {
   return events
     .sort((a, b) => b.capacity - a.capacity)

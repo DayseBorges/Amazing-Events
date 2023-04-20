@@ -48,6 +48,10 @@ displayCategories(dataAPI, categoryContainer);
 
 setEventListeners();
 
+// Parametros: data global que viene de la API, arreglo de filtros, texto que viene del search, container HTML y estado("past" "upcoming")
+// que seria la tabla donde van  a aparecer
+// Accion: Llamar a filtrarData() y iterar el arreglo que nos devuelve, para imprimir por cada evento una card
+// Salida: -
 const imprimirData = (
   dataGlobal,
   filtros,
