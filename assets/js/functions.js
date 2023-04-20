@@ -20,11 +20,9 @@ export {
   getPorcentajeAsistenciaUpcoming,
   getPorcentajeAsistenciaPast,
 };
-
 const getAllData = async () => {
   let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
   let eventsData = await response.json();
-
   return eventsData;
 };
 const getAllCategories = (data) => {
@@ -36,7 +34,6 @@ const getAllCategories = (data) => {
   });
   return categories;
 };
-
 const displayCategories = (data, categoryContainer) => {
   const categoriasUnicas = {};
   let idCounter = 0;
@@ -103,7 +100,6 @@ const createCheckbox = (category, idCounter) => {
                 <label class="form-check-label" for="check${idCounter}"> ${category} </label>`;
   return checkbox;
 };
-
 const createEventCard = (event) => {
   const cardDiv = document.createElement("div");
   cardDiv.className = "card";
@@ -120,7 +116,6 @@ const createEventCard = (event) => {
     `;
   return cardDiv;
 };
-
 const createErrorMessage = () => {
   let errorMessage = document.createElement("h2");
   errorMessage.classList.add("text-center");
@@ -128,15 +123,12 @@ const createErrorMessage = () => {
     "No se encontraron elementos que coincidan con tu busqueda.";
   return errorMessage;
 };
-
 const compararProperties = (prop1, prop2) => {
   return prop1.toLowerCase() === prop2.toLowerCase();
 };
-
 const checkIncludes = (prop1, prop2) => {
   return prop1.toLowerCase().includes(prop2.toLowerCase());
 };
-
 const comprobarDate = (date1, date2, condicion) => {
   if (condicion === "upcoming") {
     return date1 > date2;
@@ -146,7 +138,6 @@ const comprobarDate = (date1, date2, condicion) => {
     return true;
   }
 };
-
 const cardDetails = (obj, detailsContainer) => {
   const cardDetails = document.createElement("div");
   cardDetails.classList.add("row", "row-detail");
@@ -184,7 +175,6 @@ const cardDetails = (obj, detailsContainer) => {
     `;
   detailsContainer.appendChild(cardDetails);
 };
-
 const filtrarData = (
   dataGlobal,
   arregloFiltrosPorCategoria,
@@ -250,7 +240,6 @@ const filtrarData = (
   }
   return dataFiltered;
 };
-
 const tableEvent = (arr1, arr2, arr3, container) => {
   let limit = 0;
   if (container.classList.contains("table1")) {
@@ -270,11 +259,13 @@ const tableEvent = (arr1, arr2, arr3, container) => {
 };
 
 const getEventsMajorPorcentaje = (events) => {
-  return events
+  let arrOrdenado = events
     .map((event) => {
       return (event.assistance * 100) / event.capacity && event.name;
     })
     .sort();
+
+  return arrOrdenado[0];
 };
 const getEventsMenorPorcentaje = (events) => {
   return events
