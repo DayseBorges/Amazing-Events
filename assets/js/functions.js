@@ -398,7 +398,7 @@ const getEventMajorPorcentaje = (events) => {
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
  * @param {Array<Object>} events Arreglo de eventos
- * @returns {Array<Number>} Arreglo con el nombre y el porcentaje del evento mayor
+ * @returns {Array<String>} Arreglo con el nombre y el porcentaje del evento mayor
  */
 const getEventMenorPorcentaje = (events) => {
   let eventosProbando = events
@@ -419,7 +419,7 @@ const getEventMenorPorcentaje = (events) => {
 /**
  * Por cada evento calcular cual tiene mayor capacidad
  * @param {Array<Object>} events Arreglo de evento
- * @returns {Array<Number>} Arreglo ordenado de mayor a menor que contiene la capacidad de cada evento
+ * @returns {Array<String>} Arreglo ordenado de mayor a menor que contiene la capacidad de cada evento
  */
 const getEventMajorCapacity = (events) => {
   return events
