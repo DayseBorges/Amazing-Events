@@ -36,20 +36,11 @@ const getAllData = async () => {
   return eventsData;
 };
 
-<<<<<<< HEAD
-
-
-// Parametros: Arreglo de eventos
-// Accion: Filtrar todas las categorias de estos eventos
-// Salida: Array con el nombre de las categorias 
-
-=======
 /**
  * Filtrar todas las categorias de estos eventos
  * @param {Array<Object>} data acceder a data.events (arreglo de eventos)
  * @returns {Array<String>} arreglo de categorias(nombre)
  */
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
 const getAllCategories = (data) => {
   let categories = [];
   data.events.forEach((event) => {
@@ -177,10 +168,6 @@ const comprobarDate = (date1, date2, condicion) => {
   }
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
 /**
  * Crear un elemento HTML con la info del evento
  * @param {Array<Object>} obj Objeto de un Evento
@@ -225,20 +212,12 @@ const cardDetails = (obj, detailsContainer) => {
   detailsContainer.appendChild(cardDetails);
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
 /**
  * Se fija las longitudes de los filtros y dependiendo de eso filtra los eventos en un arreglo
  * Basicamente lo que permite es acumular los filtros y poder usarlos cruzados
  * @param {Array<Object>} dataGlobal Recibe toda la info que trae de la API
  * @param {Array} arregloFiltrosPorCategoria un arreglo de los filtros que estan marcados (o no)
-<<<<<<< HEAD
- * @param {String} filtroSearch un string con el filtro captura por el search 
-=======
  * @param {String} filtroSearch un string con el filtro captura por el search
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
  * @param {String} dateStatus un estado de tiempo ("past" "upcoming")
  * @returns {Arreglo<String>} Arreglo de eventos filtrados
  */
@@ -386,10 +365,6 @@ const getPorcentajeAsistenciaUpcoming = (categorias, events) =>
  * @param {Array<Object>} events eventos (Pasados)
  * @returns {Array<Number>}  Arreglo que contiene el porcentaje de asistencia de cada categoria ya convertido a %
  */
-<<<<<<< HEAD
-=======
-
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
 const getPorcentajeAsistenciaPast = (categorias, events) =>
   categorias.map((categoria) => {
     const eventosPorCategoria = getEventosPorCategoria(categoria, events);
@@ -400,10 +375,6 @@ const getPorcentajeAsistenciaPast = (categorias, events) =>
         (eventosPorCategoria.length > 0 ? eventosPorCategoria.length : 1)
     ).toFixed(2)}%`;
   });
-<<<<<<< HEAD
-=======
-
->>>>>>> 1245c9ed384f2bfd765f282829a8a174151055a7
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
  * @param {Array<Object>} events Array de eventos
