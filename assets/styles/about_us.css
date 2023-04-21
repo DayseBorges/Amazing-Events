@@ -1,0 +1,24 @@
+* {
+    font-family: "Quicksand", sans-serif;
+  }
+
+.sobre-nosotros {
+    margin: auto;
+    font-size: 1.5rem;
+    text-align: center;
+    max-width: 58vw;
+    margin-bottom: 3vw;
+}
+
+.lightbox {
+    margin-bottom: 5vw;
+}
+
+@media screen and (max-width: 1230px) {
+  .sobre-nosotros {
+    max-width: 100%;
+  }
+  .rounded {
+    margin-bottom: 10px;
+  }
+}
