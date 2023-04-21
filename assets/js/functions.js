@@ -203,6 +203,9 @@ const cardDetails = (obj, detailsContainer) => {
                         <li class="list-group-item list-group-item-action">Pecio: $ ${
                           obj.price
                         }</li>
+                        <a href="${
+                          location.origin
+                        }" class="btn_volver"> << Volver</a>
                     </div>
                   </div>
                 </div>
