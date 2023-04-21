@@ -10,9 +10,9 @@ export {
   cardDetails,
   filtrarData,
   tableEvent,
-  getEventsMajorCapacity,
-  getEventsMenorPorcentaje,
-  getEventsMajorPorcentaje,
+  getEventMajorCapacity,
+  getEventMenorPorcentaje,
+  getEventMajorPorcentaje,
   getAllCategories,
   getEventosPorCategoria,
   calcularGananciaPorCategoria,
@@ -378,42 +378,58 @@ const getPorcentajeAsistenciaPast = (categorias, events) =>
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
  * @param {Array<Object>} events Array de eventos
- * @returns {Array<Number>} Arreglo ordenado de mayor a menor que contiene el porcentaje de asistencia de cada evento
+ * @returns {Array<String>} Arreglo con el nombre y el porcentaje del evento mayor
  */
-const getEventsMajorPorcentaje = (events) => {
-  return events
+const getEventMajorPorcentaje = (events) => {
+  let eventosProbando = events
     .map((event) => {
-      return (event.assistance * 100) / event.capacity && event.name;
+      return {
+        porcentaje: (event.assistance / event.capacity) * 100,
+        nombre: event.name,
+      };
     })
-    .sort();
+    .sort((a, b) => a.porcentaje - b.porcentaje)
+    .toReversed();
+
+  let resultado = [eventosProbando[0].nombre, eventosProbando[0].porcentaje];
+
+  return resultado;
 };
+
 /**
  * Por cada evento calcular el porcentaje de asistencia que tuvieron
  * @param {Array<Object>} events Arreglo de eventos
- * @returns {Array<Number>} Arreglo ordenado de menor a mayor que contiene el porcentaje de asistencia de cada evento
+ * @returns {Array<String>} Arreglo con el nombre y el porcentaje del evento mayor
  */
-const getEventsMenorPorcentaje = (events) => {
-  return events
+const getEventMenorPorcentaje = (events) => {
+  let eventosProbando = events
     .map((event) => {
-      return (event.assistance * 100) / event.capacity && event.name;
+      return {
+        porcentaje: (event.assistance / event.capacity) * 100,
+        nombre: event.name,
+      };
     })
-    .sort()
+    .sort((a, b) => b.porcentaje - a.porcentaje)
     .toReversed();
+
+  let resultado = [eventosProbando[0].nombre, eventosProbando[0].porcentaje];
+
+  return resultado;
 };
 
 /**
  * Por cada evento calcular cual tiene mayor capacidad
  * @param {Array<Object>} events Arreglo de evento
- * @returns {Array<Number>} Arreglo ordenado de mayor a menor que contiene la capacidad de cada evento
+ * @returns {Array<String>} Arreglo ordenado de mayor a menor que contiene la capacidad de cada evento
  */
-const getEventsMajorCapacity = (events) => {
+const getEventMajorCapacity = (events) => {
   return events
     .sort((a, b) => b.capacity - a.capacity)
     .map((event) => {
       return event.name;
     });
 };
-AmazingEventsFunctions.exports = {
+const AmazingEventsFunctions = {
   getAllData,
   displayCategories,
   createCheckbox,
@@ -425,9 +441,9 @@ AmazingEventsFunctions.exports = {
   cardDetails,
   filtrarData,
   tableEvent,
-  getEventsMajorCapacity,
-  getEventsMenorPorcentaje,
-  getEventsMajorPorcentaje,
+  getEventMajorCapacity,
+  getEventMenorPorcentaje,
+  getEventMajorPorcentaje,
   getAllCategories,
   getEventosPorCategoria,
   calcularGananciaPorCategoria,

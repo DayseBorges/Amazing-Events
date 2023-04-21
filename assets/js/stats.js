@@ -2,14 +2,13 @@ import {
   getAllData,
   comprobarDate,
   tableEvent,
-  getEventsMajorCapacity,
-  getEventsMajorPorcentaje,
-  getEventsMenorPorcentaje,
+  getEventMajorCapacity,
+  getEventMajorPorcentaje,
+  getEventMenorPorcentaje,
   getAllCategories,
   getGananciasPorCategoria,
   getPorcentajeAsistenciaUpcoming,
   getPorcentajeAsistenciaPast,
-  getEventosPorCategoria,
 } from "./functions.js";
 
 const table1 = document.querySelector(".table1");
@@ -26,9 +25,9 @@ const upcomingEvents = dataGlobal.events.filter((event) => {
   return comprobarDate(event.date, dataGlobal.currentDate, "upcoming");
 });
 // Funciones table1
-const sortEventsMajor = getEventsMajorPorcentaje(pastEvents);
-const sortEventsMenor = getEventsMenorPorcentaje(pastEvents);
-const sortEventsMajorCaracity = getEventsMajorCapacity(dataGlobal.events);
+const sortEventsMajor = getEventMajorPorcentaje(pastEvents);
+const sortEventsMenor = getEventMenorPorcentaje(pastEvents);
+const sortEventsMajorCaracity = getEventMajorCapacity(dataGlobal.events);
 // Funciones y Constantes table2
 const categorias = getAllCategories(dataGlobal);
 const ingresosUpcomingPorCategoria = getGananciasPorCategoria(
