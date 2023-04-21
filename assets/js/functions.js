@@ -36,10 +36,11 @@ const getAllData = async () => {
   return eventsData;
 };
 
-// Parametros: Arreglo de eventos
-// Accion: Filtrar todas las categorias de estos eventos
-// Salida: Array con el nombre de las categorias
-
+/**
+ * Filtrar todas las categorias de estos eventos
+ * @param {Array<Object>} data acceder a data.events (arreglo de eventos)
+ * @returns {Array<String>} arreglo de categorias(nombre)
+ */
 const getAllCategories = (data) => {
   let categories = [];
   data.events.forEach((event) => {
