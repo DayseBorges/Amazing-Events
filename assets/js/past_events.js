@@ -1,6 +1,5 @@
 import {
   getAllData,
-  getCategorys,
   displayCategories,
   createEventCard,
   createErrorMessage,
@@ -28,7 +27,8 @@ const setEventListeners = () => {
   buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
   });
-  const inputs = getCategorys();
+  const inputs = document.querySelectorAll("input[type=checkbox]");
+
   for (let input of inputs) {
     input.addEventListener("change", () => {
       if (input.checked) {
@@ -48,6 +48,10 @@ displayCategories(dataAPI, categoryContainer);
 
 setEventListeners();
 
+// Parametros: data global que viene de la API, arreglo de filtros, texto que viene del search, container HTML y estado("past" "upcoming")
+// que seria la tabla donde van  a aparecer
+// Accion: Llamar a filtrarData() y iterar el arreglo que nos devuelve, para imprimir por cada evento una card
+// Salida: -
 const imprimirData = (
   dataGlobal,
   filtros,

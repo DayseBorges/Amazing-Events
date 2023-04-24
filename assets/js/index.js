@@ -1,6 +1,5 @@
 import {
   getAllData,
-  getCategorys,
   displayCategories,
   createEventCard,
   createErrorMessage,
@@ -25,7 +24,7 @@ const setEventListeners = () => {
   buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
   });
-  const inputs = getCategorys();
+  const inputs = document.querySelectorAll("input[type=checkbox]");
   for (let input of inputs) {
     input.addEventListener("change", () => {
       if (input.checked) {
